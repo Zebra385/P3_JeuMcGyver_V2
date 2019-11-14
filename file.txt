@@ -1,0 +1,3 @@
+     A first string  
+A Unicode sample: А
+German: дцья
