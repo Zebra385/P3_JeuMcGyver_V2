@@ -1,6 +1,6 @@
 
 
-from GameManager import GameManager
+from GUI import Gui
 
 """" 
     This program is to star The Game Mac Gyver
@@ -10,7 +10,7 @@ from GameManager import GameManager
 
 
 def main():
-    game = GameManager()
+    game = Gui()
     game.start()
 
 

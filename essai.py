@@ -1,28 +1,53 @@
-from random import randint
-map_structure = []  # My array to map
-with open("maps.txt") as f:  # Method open can read the text in the file
-    lines = f.readlines()  # Method readlines to seperate ligne of the text
-    for line in lines:
+from random import randint, choice
+from Map import Map
+from Character import McGyver, Guard
+from item import Item
+import pygame
+from pygame.locals import *
 
-        #line = line.strip()  # strip
+# Initialisation de la bibliothèque Pygame
+pygame.init()
+# Création de la fenêtre
+fenetre = pygame.display.set_mode((600, 600))
+list_image = ["venv/Images/Background.png", "venv/Images/Wall.png", "venv/Images/MacGyver.png",
+              "venv/Images/Gardien.png", "venv/Images/potion.png", "venv/Images/baton.png", "venv/Images/pipe.png",
+              "venv/Images/youwin.png", "venv/Images/youdied.png"]
 
-        map_structure.append(list(line))
-        print(line[:])
-    f.close()
-print(map_structure)
-for i in range(0,14):
-    for j in range(0,14):
-       print(map_structure[i][j])
-c = 0
-while c != 3 :
-    i = randint(0,14)
-    print("la valeur de i au hazard est:",i)
-    j = randint(0,14)
-    if map_structure[i][j] == " ":
-        map_structure[i][j] = "o"
-        c += 1
-print("----------------------------------------------------------------------------------------------------")
-print("la valeur de c est :",c)
-for i in range(0,14):
-    for j in range(0,14):
-       print(map_structure[i][j])
+
+def load_image(file_image):
+    image_charge = pygame.image.load(file_image).convert()
+    return image_charge
+
+
+
+
+#dispo image dans fenetre
+fond=load_image(list_image[0]).convert()
+fenetre.blit(fond,(0, 0))
+(x,y) = (40, 560)
+mc_image = load_image(list_image[2]).convert_alpha()
+fenetre.blit(mc_image ,(x,y))
+pygame.display.flip()
+#position_perso = mc_image.get_rect()
+#print(position_perso)
+#position_perso = position_perso.move(40,40)
+#print(position_perso)
+continuer = 1
+while continuer:
+    for event in pygame.event.get():  # Attente des événements
+        if event.type == QUIT:
+            continuer = 0
+        if event.type == KEYDOWN:
+            if event.key == K_UP:  # Si touche z
+                y= y -40
+                # Re-collage
+    fenetre.blit(fond, (0, 0))
+    fenetre.blit(mc_image, (x, y))
+    # Rafraichissement
+    pygame.display.flip()
+
+
+
+
+
+
