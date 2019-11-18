@@ -12,7 +12,7 @@ from GUI import Gui
 def main():
     game = Gui()
     game.start()
-
+    game.stop()
 
 
 if __name__ == "__main__":  # Main is to star the play like a programm

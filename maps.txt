@@ -1,15 +1,15 @@
 xxxxxxxxxxxxxxx
 x            g
-x xxxxxxxxxxxxx
-x xxxxxxxxxxxxx
+x xxxx xxxxxxxx
+x   xx        x
 x  xxxxxxxxxxxx
-xx xxxxxxxxxxxx
-xx xxxxxxxxxxxx
-xx xxxxxxxxxxxx
-xx      xxxxxxx
-xxxxxxx xxxxxxx
-xxxx    xxxxxxx
-xxxx xxxxxxxxxx
-xxx     xxxxxxx
+xx xxxxxx     x
+xx xxx     xxxx
+xx xxx xx xxxxx
+xx      xx   xx
+xxxxxxx xxxx xx
+xxxx    xxxx xx
+xxxx xxxxxxx xx
+xxx     xxxx xx
 xxxx          x
 xxxxmxxxxxxxxxx

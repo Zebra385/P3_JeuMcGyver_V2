@@ -28,17 +28,17 @@ class McGyver(Character):
     """
 
 
-    def move(self ):
-        continuer = 0
-        continuer = 1
-        while continuer:
-            for event in pygame.event.get():  # Attente des événements
-                if event.type == QUIT:
-                    continuer = 0
-                if event.type == KEYDOWN:
-                    if event.key == K_UP:  # Si touche z
-                        self.x_position -= 1
-                        return self.x_position, self.y_position
+    #def move(self ):
+        #continuer = 0
+        #continuer = 1
+    # while continuer:
+            #for event in pygame.event.get():  # Attente des événements
+                #if event.type == QUIT:
+    # continuer = 0
+    # if event.type == KEYDOWN:
+    # if event.key == K_UP:  # Si touche z
+    # self.x_position -= 1
+    # return self.x_position, self.y_position
 
 
 
