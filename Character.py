@@ -1,5 +1,4 @@
-import pygame
-from pygame.locals import *
+
 """
 Create a class Character with attribute a position: x_position for index of line
 and y_position for index of column
@@ -28,36 +27,23 @@ class McGyver(Character):
     """
 
 
-    #def move(self ):
-        #continuer = 0
-        #continuer = 1
-    # while continuer:
-            #for event in pygame.event.get():  # Attente des événements
-                #if event.type == QUIT:
-    # continuer = 0
-    # if event.type == KEYDOWN:
-    # if event.key == K_UP:  # Si touche z
-    # self.x_position -= 1
-    # return self.x_position, self.y_position
-
-
-
-         ##   keyboard = input("Tell me how you want  move Mc Gyver; the key z to up, s:  down, q : left and  d : right ")
-           # if keyboard =='z':  # if key 'z' is pressed
-            #    self.x_position -= 1
-             #   return self.x_position, self.y_position
-           # elif keyboard == 's':
-            #    self.x_position += 1
-             #   return self.x_position, self.y_position
-         #   if keyboard == 'q':
-                #     self.y_position -= 1
-            #      return self.x_position, self.y_position
-                #  elif keyboard == 'd':
-                #     self.y_position += 1
-            #      return self.x_position, self.y_position
-                #   else:# if an other key : make nothing and  write a message
-                #   print("!!!!!!!!!!!!!!!!------------------This key of keyboard is forbiden----------------!!!!!!!!!!!!!")
-        #   return self.x_position, self.y_position
+    def move(self ):
+        keyboard = input("Tell me how you want  move Mc Gyver; the key z to up, s:  down, q : left and  d : right ")
+        if keyboard =='z':  # if key 'z' is pressed
+           self.x_position -= 1
+           return self.x_position, self.y_position
+        elif keyboard == 's':
+            self.x_position += 1
+            return self.x_position, self.y_position
+        if keyboard == 'q':
+            self.y_position -= 1
+            return self.x_position, self.y_position
+        elif keyboard == 'd':
+            self.y_position += 1
+            return self.x_position, self.y_position
+        else:# if an other key : make nothing and  write a message
+            print("!!!!!!!!!!!!!!!!------------------This key of keyboard is forbiden----------------!!!!!!!!!!!!!")
+            return self.x_position, self.y_position
     """
     Methode to know the position
     """
