@@ -29,10 +29,9 @@ class MySprite(pygame.sprite.Sprite):
 
 
 """
-Class Gui to transform a file text in a labyrinthe:
-We can go in a empty espace and the wall is the
-character"x" We use Pygame to open a window
-and load the differents pictures
+Class Gui to transform a file text in a labyrinthe:We can go in a empty espace
+and the wall is the character"x" We use Pygame to open a window and load the
+differents pictures
 """
 
 
@@ -42,7 +41,7 @@ class Gui:
         # We want change the time betwen two new windows
         self.clock = pygame.time.Clock()
         # Dim of pygame window
-        self.fenetre = pygame.display.set_mode((600, 600))
+        self.fenetre = pygame.display.set_mode((1200, 1000))
         # to read the file text
         self.map = Map("maps.txt")
 
@@ -87,8 +86,7 @@ class Gui:
         return image_charge
 
     """
-    Create method to make in good positions
-    the sprite character in a goup
+    Create method to make in good positions the sprite character in a goup
     """
     def Set_character(self):
         mcgyver = self.map.find_one_character("m")
@@ -102,8 +100,7 @@ class Gui:
         self.characters_sprites_group.add(self.mcgyver_sprite, guard_sprite)
 
     """
-    Create method to make in good
-    positions the sprite wall in a goup
+    Create method to make in good positions the sprite wall in a goup
     """
 
     def Set_wall(self):
@@ -120,9 +117,13 @@ class Gui:
 
     def Set_background(self):
         image_background = self.load_image("Images/Background.png")
-        sprite = MySprite(image_background)
-        sprite.move_sprite(0, 0)
-        self.background_sprite_group.add(sprite)
+        for i in range(0, 2):
+            for j in range(0, 2):
+                sprite = MySprite(image_background)
+                sprite.move_sprite(i*15, j*15)
+                self.background_sprite_group.add(sprite)
+
+
 
     """
         Create method to make in good positions the sprite item in a goup
@@ -162,14 +163,11 @@ class Gui:
             pygame.sprite.Sprite.kill(self.pipe_sprite)
 
     """
-    Method to star the game, we continue to play
-    while the position of Mc Gyver is different
-    to the position of guard and the variable
-    self.continue different to 0. In fact this
-    variable wait that the player put on a  key
-    of keyboard we use keyboard arrow key: K_UP
-    to go up, K_DOWN to go down, K_LEFT to go
-    left and K_RIGHT to go right
+    Method to star the game, we continue to play while the position of Mc Gyver
+    is different to the position of guard and the variable self.continue
+    different to 0. In fact this variable wait that the player put on a  key
+    of keyboard we use keyboard arrow key: K_UP to go up, K_DOWN to go down,
+    K_LEFT to go left and K_RIGHT to go right
     """
 
     def start(self):
@@ -216,7 +214,7 @@ class Gui:
 
                     if self.map.retrieve_character(x_m, y_m) == item.character:
                         # we add a object to Mc Gyver
-                        self.mcgyver.inventury.append(item.name)
+                        self.mcgyver.inventory.append(item.name)
                         # we kill item_Sprite
                         self.kill(item.character)
                 #if self.map.retrieve_character(x_m, y_m) != "g":
@@ -240,38 +238,27 @@ class Gui:
             self.clock.tick(60)
 
     """
-      Method to stop the game
-      WIN when Mc gyver is in a position of guard whith 3 objects
-      LOSE if have not the 3 objects
+      Method to stop the game WIN when Mc gyver is in a position of guard whith 3 objects LOSE if have not the 3 objects
     """
 
     def stop(self):
+        if len(self.mcgyver.inventory) == 3:
+            print("YOU ARE A WINNER---YOU ARE A WINNER")
+            # load picture when we win
+            img = self.load_image("Images/youwin.png").convert()
+        else:
+            print("Sorry but you haven't the three object:"
+                  " YOU LOSE---YOU LOSE---YOU LOSE")
+            print("It fail ", int(3 - len(self.mcgyver.inventury)),
+                  " objet(s)")
+            img = self.load_image("Images/youdied.png").convert()
+        self.fenetre.blit(img, (0, 0))
+        pygame.display.flip()
+
         while self.continuer:
-            if len(self.mcgyver.inventury) == 3:
-                print("YOU ARE A WINNER---YOU ARE A WINNER")
-                # load picture when we win
-                win = self.load_image("Images/youwin.png").convert()
-                self.fenetre.blit(win, (0, 0))
-                pygame.display.flip()
-                # If we put in the cross in th heigt
-                # and right of the xwindow Pygame we can
-                for event in pygame.event.get():
-                    #  stop the play to close the window
-                    if event.type == QUIT:
-                        self.continuer = 0
-            else:
-                print("Sorry but you haven't the three object:"
-                      " YOU LOSE---YOU LOSE---YOU LOSE")
-                print("It fail ", int(3 - len(self.mcgyver.inventury)),
-                      " objet(s)")
-                # load picture when we died
-                dead = self.load_image("Images/youdied.png").convert()
-                self.fenetre.blit(dead, (0, 0))
-                pygame.display.flip()
-                # Boucle infinie
-                # If we put in the cross in th heigt
-                # and right of the xwindow Pygame we can
-                for event in pygame.event.get():
-                    #  stop the play to close the window
-                    if event.type == QUIT:
-                        self.continuer = 0
+            # If we put in the cross in th heigt
+            # and right of the xwindow Pygame we can
+            for event in pygame.event.get():
+                #  stop the play to close the window
+                if event.type == QUIT:
+                    self.continuer = 0

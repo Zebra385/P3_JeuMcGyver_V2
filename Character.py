@@ -1,7 +1,6 @@
 
 """
-Create a class Character with attribute
-a position: x_position for index of line
+Create a class Character with attribute a position: x_position for index of line
 and y_position for index of column
 """
 
@@ -14,21 +13,21 @@ class Character:
 
 
 """
-Create class McGyver that are a children-class
-Character with special character m
+Create class McGyver that are a children-class Character with special
+character m
 """
 
 
 class McGyver(Character):
     def __init__(self, x_position, y_position):
         Character.__init__(self, "m", x_position, y_position)
-        self.inventury = []
+        self.inventory = []
         # A list to stock the object
         # (item) that Mc Gyver take
 
     """
-    Method move to move m like My Gyver with keyboard
-    z to up, s:  down, q : left and  d : right
+    Method move to move m like My Gyver with keyboard z to up, s:  down, 
+    q : left and  d : right
     """
     def move(self):
         keyboard = input("Tell me how you want  move Mc Gyver; "
@@ -63,8 +62,7 @@ class McGyver(Character):
 
 
 """
-Create class Guard those are a children-class
-Character with special character g
+Create class Guard those are a children-class Character with special character g
 """
 
 

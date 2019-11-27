@@ -1,8 +1,7 @@
 # coding: utf-8  # encodage in French
 
 """
-Create a class Map to play , the map
-is a file text that transform in a
+Create a class Map to play , the map is a file text that transform in a
 array[line, column], name map_structure
 """
 
@@ -41,8 +40,8 @@ class Map:
         # return the position of this character
 
     """
-    Definition a method those find the position
-    to the same character and whose add in the list position
+    Definition a method those find the position     to the same character and
+    whose add in the list position
     """
     def find_all_characters(self, character):
         positions = []

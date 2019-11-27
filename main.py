@@ -15,8 +15,8 @@ This program is to star The Game Mac Gyver
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", "--Terminal", action="store_true",
-                        help=""" Without option, we play with window
-                        Pygame, with option "-t", we use Terminal""")
+                        help=""" Without option, we play with window Pygame,
+                        with option "-t", we use Terminal""")
     return parser.parse_args()
 
 
