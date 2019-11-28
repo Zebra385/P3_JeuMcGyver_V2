@@ -60,6 +60,12 @@ class McGyver(Character):
         self.x_position = x
         self.y_position = y
 
+    """
+    Method to inventory the item that Mc Gyver take on the map
+    """
+
+    def add_item(self, item_name):
+        self.inventory.append(item_name)
 
 """
 Create class Guard those are a children-class Character with special character g

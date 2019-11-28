@@ -41,7 +41,17 @@ class Gui:
         # We want change the time betwen two new windows
         self.clock = pygame.time.Clock()
         # Dim of pygame window
-        self.fenetre = pygame.display.set_mode((1200, 1000))
+        self.fenetre = pygame.display.set_mode((700, 650))
+        pygame.font.init()  # you have to call this at the start,
+        # if you want to use this module.
+        #affichage text dans fenetre Pygame
+        #myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        #textsurface = myfont.render('Some Text', False, (0, 0, 0))
+        #self.fenetre.blit(textsurface, (600, 330))
+        print("we use keyboard arrow key: K_UP to go up"
+              ", K_DOWN to go down, K_LEFT to go left "
+              "and K_RIGHT to go right ")
+
         # to read the file text
         self.map = Map("maps.txt")
 
@@ -117,11 +127,9 @@ class Gui:
 
     def Set_background(self):
         image_background = self.load_image("Images/Background.png")
-        for i in range(0, 2):
-            for j in range(0, 2):
-                sprite = MySprite(image_background)
-                sprite.move_sprite(i*15, j*15)
-                self.background_sprite_group.add(sprite)
+        sprite = MySprite(image_background)
+        sprite.move_sprite(0, 0)
+        self.background_sprite_group.add(sprite)
 
 
 
@@ -155,12 +163,19 @@ class Gui:
     """ Method to delete a item_sprite """
 
     def kill(self, character):
+        myfont = pygame.font.SysFont('Comic Sans MS', 15)
         if character == "e":
             pygame.sprite.Sprite.kill(self.ether_sprite)
+            text_ether = myfont.render( "Ether",  False, (255, 255, 255))
+            self.fenetre.blit(text_ether, (650, 40))
         elif character == "n":
             pygame.sprite.Sprite.kill(self.needle_sprite)
+            text_needle = myfont.render("Needle", False, (255, 255, 255))
+            self.fenetre.blit(text_needle, (650, 60))
         elif character == "p":
             pygame.sprite.Sprite.kill(self.pipe_sprite)
+            text_pipe = myfont.render("Pipe", False, (255, 255, 255))
+            self.fenetre.blit(text_pipe, (650, 80))
 
     """
     Method to star the game, we continue to play while the position of Mc Gyver
@@ -171,9 +186,13 @@ class Gui:
     """
 
     def start(self):
-        print("we use keyboard arrow key: K_UP to go up"
-              ", K_DOWN to go down, K_LEFT to go left "
-              "and K_RIGHT to go right ")
+        # message bas de fenetre
+        myfont = pygame.font.SysFont('Comic Sans MS', 15)
+        text_move = myfont.render("Keyboard arrow key: K_UP to go up , K_DOWN to go down, K_LEFT to go left and K_RIGHT to go right ", False, (255, 255, 255))
+        self.fenetre.blit(text_move, (0, 620))
+        text_items = myfont.render("Item(s) take : ", False, (255, 255, 255))
+        self.fenetre.blit(text_items, (600, 10))
+        #pygame.draw.rect(fenetre, (255,255,255), [500, 600, 10, 5], 0)
         m_x, m_y = self.mcgyver.x_position, self.mcgyver.y_position
         g_x, g_y = self.guard.x_position, self.guard.y_position
         while (m_x, m_y) != (g_x, g_y) and self.continuer:
@@ -206,19 +225,18 @@ class Gui:
             x_m, y_m = self.mcgyver.position()
             # keyboard arrow key
             # Test to know, is it a good move?
-
-            if self.map.retrieve_character(x_m, y_m) != "x":
+            next_position_letter = self.map.retrieve_character(x_m, y_m)
+            if next_position_letter != "x" and next_position_letter != "g":
 
                 # Test to know if Mc Gyver have take an object
                 for item in self.items:
-
                     if self.map.retrieve_character(x_m, y_m) == item.character:
                         # we add a object to Mc Gyver
-                        self.mcgyver.inventory.append(item.name)
+                        self.mcgyver.add_item(item.name)
                         # we kill item_Sprite
                         self.kill(item.character)
-                #if self.map.retrieve_character(x_m, y_m) != "g":
-                self.map.write_character(" ", x_m, y_m)
+                if self.map.retrieve_character(x_m, y_m) != "g":
+                    self.map.write_character(" ", x_m, y_m)
                 m_x, m_y = x_m, y_m
                 # We change the position of Mc Gyver
                 # in the file text and we replace " " in "m"
@@ -228,10 +246,17 @@ class Gui:
                 print("la position de Mc Gyver a bougé en ", x_m, y_m)
                 # We move Mc Gyver ton the window Pygame
                 self.mcgyver_sprite.move_sprite(x_m, y_m)
-            #  Test is not a good move
-            else:
+            #  Test is not a good move, we go in the wall
+            elif next_position_letter == "x":
                 print(" No, You can't go here")
                 self.mcgyver.set_position(x_position, y_position)
+            #  Test to move Mc Gyver if the next letter is "g" for Guard
+            elif next_position_letter == "g":
+                m_x, m_y = x_m, y_m
+                # We change the position of Mc Gyver
+                # in the file text and we replace " " in "m"
+                self.mcgyver.set_position(x_m, y_m)
+                self.map.write_character("m", m_x, m_y)
 
             pygame.display.flip()
             # 60 pictures per second
@@ -249,7 +274,7 @@ class Gui:
         else:
             print("Sorry but you haven't the three object:"
                   " YOU LOSE---YOU LOSE---YOU LOSE")
-            print("It fail ", int(3 - len(self.mcgyver.inventury)),
+            print("It fail ", int(3 - len(self.mcgyver.inventory)),
                   " objet(s)")
             img = self.load_image("Images/youdied.png").convert()
         self.fenetre.blit(img, (0, 0))
