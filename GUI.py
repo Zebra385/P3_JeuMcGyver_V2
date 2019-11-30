@@ -44,13 +44,6 @@ class Gui:
         self.fenetre = pygame.display.set_mode((700, 650))
         pygame.font.init()  # you have to call this at the start,
         # if you want to use this module.
-        #affichage text dans fenetre Pygame
-        #myfont = pygame.font.SysFont('Comic Sans MS', 30)
-        #textsurface = myfont.render('Some Text', False, (0, 0, 0))
-        #self.fenetre.blit(textsurface, (600, 330))
-        print("we use keyboard arrow key: K_UP to go up"
-              ", K_DOWN to go down, K_LEFT to go left "
-              "and K_RIGHT to go right ")
 
         # to read the file text
         self.map = Map("maps.txt")
@@ -66,9 +59,7 @@ class Gui:
               x_pos_bigining, y_pos_bigining)
         # We looking for the position of Guard with is charater special "g"
         (x_pos_end, y_pos_end) = self.map.find_one_character("g")
-        #  Test:
-        print("la position du guard est ligne  ",
-              x_pos_end, ", et colonne  ", y_pos_end)
+
         #  Create object mcgyver in his position
         self.mcgyver = McGyver(x_pos_bigining, y_pos_bigining)
         #  Create object guard in his position
@@ -91,7 +82,6 @@ class Gui:
     """
 
     def load_image(self, file_image):
-        # self.file_image = file_image
         image_charge = pygame.image.load(file_image).convert_alpha()
         return image_charge
 
@@ -163,7 +153,7 @@ class Gui:
     """ Method to delete a item_sprite """
 
     def kill(self, character):
-        myfont = pygame.font.SysFont('Comic Sans MS', 15)
+        myfont = pygame.font.Font(pygame.font.get_default_font(), 15)
         if character == "e":
             pygame.sprite.Sprite.kill(self.ether_sprite)
             text_ether = myfont.render( "Ether",  False, (255, 255, 255))
@@ -186,8 +176,8 @@ class Gui:
     """
 
     def start(self):
-        # message bas de fenetre
-        myfont = pygame.font.SysFont('Comic Sans MS', 15)
+        # message in down window
+        myfont = pygame.font.Font(pygame.font.get_default_font(), 15)
         text_move = myfont.render("Keyboard arrow key: K_UP to go up , K_DOWN to go down, K_LEFT to go left and K_RIGHT to go right ", False, (255, 255, 255))
         self.fenetre.blit(text_move, (0, 620))
         text_items = myfont.render("Item(s) take : ", False, (255, 255, 255))
@@ -243,7 +233,7 @@ class Gui:
                 self.mcgyver.set_position(x_m, y_m)
                 self.map.write_character("m", m_x, m_y)
                 #  TEST
-                print("la position de Mc Gyver a bougé en ", x_m, y_m)
+                #  print("la position de Mc Gyver a bougé en ", x_m, y_m)
                 # We move Mc Gyver ton the window Pygame
                 self.mcgyver_sprite.move_sprite(x_m, y_m)
             #  Test is not a good move, we go in the wall
@@ -267,8 +257,11 @@ class Gui:
     """
 
     def stop(self):
+        myfont = pygame.font.Font(pygame.font.get_default_font(), 40)
+        text_Fin = myfont.render("KEYDOWN TO STOP THE GAME ", False,
+                                 (255, 0, 0))
+
         if len(self.mcgyver.inventory) == 3:
-            print("YOU ARE A WINNER---YOU ARE A WINNER")
             # load picture when we win
             img = self.load_image("Images/youwin.png").convert()
         else:
@@ -278,12 +271,13 @@ class Gui:
                   " objet(s)")
             img = self.load_image("Images/youdied.png").convert()
         self.fenetre.blit(img, (0, 0))
+        self.fenetre.blit(text_Fin, (0, 420))
         pygame.display.flip()
 
         while self.continuer:
             # If we put in the cross in th heigt
             # and right of the xwindow Pygame we can
             for event in pygame.event.get():
-                #  stop the play to close the window
-                if event.type == QUIT:
+                #  stop the play to close the window or put on a keyboard key
+                if event.type == QUIT or event.type == KEYDOWN:
                     self.continuer = 0
