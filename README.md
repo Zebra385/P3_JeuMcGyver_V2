@@ -17,9 +17,9 @@
 ## 4. Images des deux versions :
 # - Version ***PYGAME***
 ## On utilise les fléches pour ce déplacer dans ce labyrinthe
- ![Version, PYGAME](images/Image_SansOption.png) 
+ ![Version, PYGAME](Images/Image_SansOption.png) 
 # - Version ***TERMINAL de commmande***
 ## On utilise les lettres suivantes du clavier pour déplacer le caractère"m" qui représente  Mc Gyver
 ###    z pour monter, s:  descendre, q : aller à gauche and  d : aller à droite
 ### Le caractere "g" est le gardien et les objets à ramasser sont "e", "n" et "p"
- ![Version, TERMINAL](images/Image_option_t.png)
+ ![Version, TERMINAL](Images/Image_option_t.png)
