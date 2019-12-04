@@ -40,7 +40,7 @@ class Map:
         # return the position of this character
 
     """
-    Definition a method those find the position     to the same character and
+    Definition a method those find the position to the same character and
     whose add in the list position
     """
     def find_all_characters(self, character):

@@ -8,7 +8,7 @@ import argparse
 This program is to star The Game Mac Gyver
 """
 #  create a class parse to choice between two option to play the Game,
-#  No option: we play automaticaly with GUI (Window Pycharm)
+#  No option: we play automatically with GUI (Window Pycharm)
 #  With option -t : We use the Terminal
 
 
@@ -36,5 +36,5 @@ def main():
         game.stop()
 
 
-if __name__ == "__main__":  # Main is to star the play like a programm
+if __name__ == "__main__":  # Main is to star the play like a program
     main()

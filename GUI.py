@@ -3,12 +3,14 @@ from Map import Map
 from Character import McGyver, Guard
 from item import Item
 import pygame
-from pygame.locals import QUIT, KEYDOWN, K_UP, K_LEFT, K_RIGHT, K_DOWN
+from pygame.locals import QUIT, KEYDOWN
 
 """
 Class MySprite of pygame to make our texture
 """
+# constant is ratio pygam window and text file
 SPRITE_SIZE = 40
+# In fact 40 pixels for a character
 
 
 class MySprite(pygame.sprite.Sprite):
@@ -45,9 +47,9 @@ class Gui:
         pygame.font.init()  # you have to call this at the start,
         # if you want to use this module.
 
-        # to read the file text
+        # we create  object map of class Map
         self.map = Map("maps.txt")
-
+        # Create the bacground for the pygame window
         self.background_sprite_group = pygame.sprite.Group()
         self.Set_background()
         # We looking for the position of
@@ -59,18 +61,17 @@ class Gui:
               x_pos_bigining, y_pos_bigining)
         # We looking for the position of Guard with is charater special "g"
         (x_pos_end, y_pos_end) = self.map.find_one_character("g")
-
         #  Create object mcgyver in his position
         self.mcgyver = McGyver(x_pos_bigining, y_pos_bigining)
         #  Create object guard in his position
         self.guard = Guard(x_pos_end, y_pos_end)
-        # Create three objects
+        # Create three objects for pygame window
         self.characters_sprites_group = pygame.sprite.Group()
         self.Set_character()
-        #  Create the wall of labyrinth
+        #  Create the wall of labyrinth for pygame window
         self.walls_sprite_group = pygame.sprite.Group()
         self.Set_wall()
-        #  Create the 3 items
+        #  Create the 3 items for pygame window
         self.items_sprite_group = pygame.sprite.Group()
         self.Set_items()
         # Variable that  continue the condition "while"
@@ -86,7 +87,8 @@ class Gui:
         return image_charge
 
     """
-    Create method to make in good positions the sprite character in a goup
+    Create method to make in good positions the sprite character in a group
+    for pygame window
     """
     def Set_character(self):
         mcgyver = self.map.find_one_character("m")
@@ -100,7 +102,8 @@ class Gui:
         self.characters_sprites_group.add(self.mcgyver_sprite, guard_sprite)
 
     """
-    Create method to make in good positions the sprite wall in a goup
+    Create method to make in good positions the sprite wall in a group for
+    pygame window
     """
 
     def Set_wall(self):
@@ -112,7 +115,8 @@ class Gui:
             self.walls_sprite_group.add(sprite)
 
     """
-        Create method to make in good positions the sprite background in a goup
+    Create method to make in good positions the sprite background in a group
+    for pygame window
     """
 
     def Set_background(self):
@@ -121,10 +125,9 @@ class Gui:
         sprite.move_sprite(0, 0)
         self.background_sprite_group.add(sprite)
 
-
-
     """
-        Create method to make in good positions the sprite item in a goup
+    Create method to make in good positions the sprite item in a group for
+    pygame window
     """
 
     def Set_items(self):
@@ -150,13 +153,16 @@ class Gui:
             sprite.move_sprite(item.x, item.y)
             self.items_sprite_group.add(sprite)
 
-    """ Method to delete a item_sprite """
+    """
+    Method to delete a item_sprite in a pygame window and write in the right of
+    pygame window wichone My Gyver took
+    """
 
     def kill(self, character):
         myfont = pygame.font.Font(pygame.font.get_default_font(), 15)
         if character == "e":
             pygame.sprite.Sprite.kill(self.ether_sprite)
-            text_ether = myfont.render( "Ether",  False, (255, 255, 255))
+            text_ether = myfont.render("Ether",  False, (255, 255, 255))
             self.fenetre.blit(text_ether, (650, 40))
         elif character == "n":
             pygame.sprite.Sprite.kill(self.needle_sprite)
@@ -178,22 +184,23 @@ class Gui:
     def start(self):
         # message in down window
         myfont = pygame.font.Font(pygame.font.get_default_font(), 15)
-        text_move = myfont.render("Keyboard arrow key: K_UP to go up , K_DOWN to go down, K_LEFT to go left and K_RIGHT to go right ", False, (255, 255, 255))
+        text_move = myfont.render("Keyboard arrow key: K_UP to go up , K_DOWN to"
+                                  " go down, K_LEFT to go left and K_RIGHT to go"
+                                  " right ", False, (255, 255, 255))
         self.fenetre.blit(text_move, (0, 620))
         text_items = myfont.render("Item(s) take : ", False, (255, 255, 255))
         self.fenetre.blit(text_items, (600, 10))
-        #pygame.draw.rect(fenetre, (255,255,255), [500, 600, 10, 5], 0)
         m_x, m_y = self.mcgyver.x_position, self.mcgyver.y_position
         g_x, g_y = self.guard.x_position, self.guard.y_position
         while (m_x, m_y) != (g_x, g_y) and self.continuer:
             # We draw in this order background, wall,
             # items (3) and characters(Mc Gyver and the  Guard)
+            # on the pygame window
             self.background_sprite_group.draw(self.fenetre)
             self.walls_sprite_group.draw(self.fenetre)
             self.items_sprite_group.draw(self.fenetre)
             self.characters_sprites_group.draw(self.fenetre)
-            # We bigining to replace Mc Gyver position with " " instead of "m"
-
+            # We load position of Mc Gyver befor he move
             x_position, y_position = self.mcgyver.position()
             # Wait a key event
             for event in pygame.event.get():
@@ -203,21 +210,15 @@ class Gui:
                 if event.type == QUIT:
                     self.continuer = 0
                 if event.type == KEYDOWN:
-                    if event.key == K_UP:  # to go up
-                        self.mcgyver.x_position -= 1
-                    if event.key == K_DOWN:  # Sto go down
-                        self.mcgyver.x_position += 1
-                    if event.key == K_LEFT:  # to go leftt
-                        self.mcgyver.y_position -= 1
-                    if event.key == K_RIGHT:  # to go right
-                        self.mcgyver.y_position += 1
+                    self.mcgyver.move_gui(event)
             # New position of Mc Gyver after put on a
-            x_m, y_m = self.mcgyver.position()
             # keyboard arrow key
+            x_m, y_m = self.mcgyver.position()
+            if x_m < 0 or x_m >= 15 or y_m < 0 or y_m >= 15:
+                x_m, y_m = x_position, y_position
             # Test to know, is it a good move?
             next_position_letter = self.map.retrieve_character(x_m, y_m)
             if next_position_letter != "x" and next_position_letter != "g":
-
                 # Test to know if Mc Gyver have take an object
                 for item in self.items:
                     if self.map.retrieve_character(x_m, y_m) == item.character:
@@ -232,8 +233,6 @@ class Gui:
                 # in the file text and we replace " " in "m"
                 self.mcgyver.set_position(x_m, y_m)
                 self.map.write_character("m", m_x, m_y)
-                #  TEST
-                #  print("la position de Mc Gyver a bougé en ", x_m, y_m)
                 # We move Mc Gyver ton the window Pygame
                 self.mcgyver_sprite.move_sprite(x_m, y_m)
             #  Test is not a good move, we go in the wall
@@ -253,14 +252,14 @@ class Gui:
             self.clock.tick(60)
 
     """
-      Method to stop the game WIN when Mc gyver is in a position of guard whith 3 objects LOSE if have not the 3 objects
+    Method to stop the game WIN when Mc gyver is in a position of guard whith
+    3 objects LOSE if have not the 3 objects
     """
 
     def stop(self):
         myfont = pygame.font.Font(pygame.font.get_default_font(), 40)
         text_Fin = myfont.render("KEYDOWN TO STOP THE GAME ", False,
                                  (255, 0, 0))
-
         if len(self.mcgyver.inventory) == 3:
             # load picture when we win
             img = self.load_image("Images/youwin.png").convert()
@@ -275,9 +274,8 @@ class Gui:
         pygame.display.flip()
 
         while self.continuer:
-            # If we put in the cross in th heigt
-            # and right of the xwindow Pygame we can
+            # If we put in the cross in the heigt and right of the window Pygame
+            # or put on a keyboard key, we stop the play
             for event in pygame.event.get():
-                #  stop the play to close the window or put on a keyboard key
                 if event.type == QUIT or event.type == KEYDOWN:
                     self.continuer = 0

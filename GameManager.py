@@ -5,13 +5,13 @@ from item import Item
 
 
 """
-Create class GameManager to star the game
+Create class GameManager to star the game in Terminal Version
 """
 
 
 class GameManager:
     def __init__(self):
-
+        # we create  object map of class Map to play game
         self.map = Map("maps.txt")
         # We looking for the position of Mc Gyver with is charater special "m"
         (x_pos_bigining, y_pos_bigining) = self.map.find_one_character("m")
@@ -22,12 +22,11 @@ class GameManager:
         #  Test:
         print("la position du guard est ligne  ",
               x_pos_end, ", et colonne  ", y_pos_end)
-        #  Create object mcgyver in his position
+        #  Create object mcgyver  of class McGyver in his position
         self.mcgyver = McGyver(x_pos_bigining, y_pos_bigining)
-        #  Create object
-        #  guard in his position
+        #  Create object guard  of class Guard in his position
         self.guard = Guard(x_pos_end, y_pos_end)
-        # Create three objects
+        # Create three items
         self.items = [Item("e", "Ether", -1, -1),
                       Item("n", "Needle", -1, -1),
                       Item("p", "Pipe", -1, -1)]
@@ -36,7 +35,7 @@ class GameManager:
         #  positions in a  empty_space list
         empty_spaces = self.map.find_all_characters(" ")
 
-        #  We add in the map the 3 random objects
+        #  We add in the map the 3 random items
         for item in self.items:
             # random position in the list empty_space
             position = choice(empty_spaces)
@@ -46,14 +45,10 @@ class GameManager:
             self.map.write_character(item.character, item.x, item.y)
 
     """
-    Method to star the game, we continue
-    to play while the position of Mc Gyver
-     is different to the position of guard
-    In fact this variable wait that the
-    player put on a  key of keyboard
-    we use keyboard  key_z to go up
-    , s to go down, q to go left and
-    d to go right
+    Method to star the game, we continue to play while the position of Mc Gyver
+    is different to the position of guard In fact this variable wait that the
+    player put on a  key of keyboard we use keyboard  key_z to go up, s to go
+    down, q to go left and d to go right
     """
 
     def start(self):
@@ -62,15 +57,18 @@ class GameManager:
         # different position of character "g"
         while (self.mcgyver.x_position, self.mcgyver.y_position) !=\
                 (self.guard.x_position, self.guard.y_position):
-            #  Window map
+            #  Window map in Terminal
             print(self.map)
             self.map.write_character(" ", self.mcgyver.x_position,
                                      self.mcgyver.y_position)
-            #  x_position, y_position = self.mcgyver.x_position,
-            #  self.mcgyver.y_position
+            # load position of Mc Gyver
             x_position, y_position = self.mcgyver.position()
             # we call method move in class McGyver
             x_position_moving, y_position_moving = self.mcgyver.move()
+            # We test that the moving are not outside the map
+            if x_position_moving < 0 or x_position_moving >= 15 or\
+                    y_position_moving < 0 or y_position_moving >= 15:
+                x_position_moving, y_position_moving = x_position, y_position
             # Test to know, is it a good move?
             if self.map.retrieve_character(x_position_moving,
                                            y_position_moving) != "x":
@@ -78,7 +76,7 @@ class GameManager:
                 for item in self.items:
                     x_m, y_m = x_position_moving, y_position_moving
                     if self.map.retrieve_character(x_m, y_m) == item.character:
-                        self.mcgyver.inventury.append(item.name)
+                        self.mcgyver.inventory.append(item.name)
                 self.mcgyver.set_position(x_position_moving, y_position_moving)
                 self.map.write_character("m", self.mcgyver.x_position,
                                          self.mcgyver.y_position)
@@ -89,11 +87,10 @@ class GameManager:
                                          self.mcgyver.y_position)
 
         """
-              Method to stop the game
-              WIN when Mc gyver is in a position of guard whith 3 objects
-              LOSE if have not the 3 objects
+        Method to stop the game : WIN when Mc gyver is in a position of guard
+        whith 3 objects LOSE if have not the 3 objects
         """
-        if len(self.mcgyver.inventury) == 3:
+        if len(self.mcgyver.inventory) == 3:
             self.map.write_character("m", self.mcgyver.x_position,
                                      self.mcgyver.y_position)
             print(self.map)
@@ -103,5 +100,5 @@ class GameManager:
                   ": YOU LOSE---YOU LOSE---YOU LOSE---"
                   "YOU LOSE---YOU LOSE---")
             print("It fail ",
-                  int(3 - len(self.mcgyver.inventury)),
+                  int(3 - len(self.mcgyver.inventory)),
                   " object(s)")

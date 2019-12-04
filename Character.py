@@ -1,8 +1,10 @@
-
+import pygame
+from pygame.constants import K_UP, K_DOWN, K_LEFT, K_RIGHT
 """
 Create a class Character with attribute a position: x_position for index of line
 and y_position for index of column
 """
+
 
 
 class Character:
@@ -48,6 +50,17 @@ class McGyver(Character):
         else:  # if an other key : make nothing and  write a message
             print("!!!!!!!This key of keyboard is forbiden-!!!!!!!!!!!!!")
             return self.x_position, self.y_position
+
+    def move_gui(self,event):
+        if event.key == K_UP:  # to go up
+            self.x_position -= 1
+        if event.key == K_DOWN:  # Sto go down
+            self.x_position += 1
+        if event.key == K_LEFT:  # to go leftt
+            self.y_position -= 1
+        if event.key == K_RIGHT:  # to go right
+            self.y_position += 1
+
     """
     Methode to know the position
     """
