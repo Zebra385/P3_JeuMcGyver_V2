@@ -184,8 +184,8 @@ class Gui:
     def start(self):
         # message in down window
         myfont = pygame.font.Font(pygame.font.get_default_font(), 15)
-        text_move = myfont.render("Keyboard arrow key: K_UP to go up , K_DOWN to"
-                                  " go down, K_LEFT to go left and K_RIGHT to go"
+        text_move = myfont.render("Keyboard arrow key: K_UP go up , K_DOWN "
+                                  " go down, K_LEFT go left and K_RIGHT go"
                                   " right ", False, (255, 255, 255))
         self.fenetre.blit(text_move, (0, 620))
         text_items = myfont.render("Item(s) take : ", False, (255, 255, 255))
